@@ -1,0 +1,2 @@
+File name: ashigaru_terminal_v1.0.0_amd64.deb
+SHA256: 15081f7f3957b2d60abf1f5c0dc5435d09e3387636b44215688dac2d01b4334f

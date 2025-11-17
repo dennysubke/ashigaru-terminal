@@ -261,30 +261,53 @@ jlink {
         }
     }
     addExtraDependencies("javafx")
+        addExtraDependencies("javafx")
     jpackage {
         imageName = "Ashigaru-terminal"
         installerName = "Ashigaru-terminal"
         appVersion = "${ashigaruTerminalVersion}"
         skipInstaller = properties.skipInstallers
         imageOptions = []
-        installerOptions = ['--file-associations', 'src/main/deploy/psbt.properties', '--file-associations', 'src/main/deploy/txn.properties', '--file-associations', 'src/main/deploy/asc.properties', '--file-associations', 'src/main/deploy/bitcoin.properties', '--file-associations', 'src/main/deploy/auth47.properties', '--file-associations', 'src/main/deploy/lightning.properties', '--license-file', 'LICENSE']
+        installerOptions = ['--file-associations', 'src/main/deploy/psbt.properties',
+                            '--file-associations', 'src/main/deploy/txn.properties',
+                            '--file-associations', 'src/main/deploy/asc.properties',
+                            '--file-associations', 'src/main/deploy/bitcoin.properties',
+                            '--file-associations', 'src/main/deploy/auth47.properties',
+                            '--file-associations', 'src/main/deploy/lightning.properties',
+                            '--license-file', 'LICENSE']
+
         if(os.windows) {
-            installerOptions += ['--win-per-user-install', '--win-dir-chooser', '--win-menu', '--win-menu-group', 'Ashigaru-terminal', '--win-shortcut', '--resource-dir', 'src/main/deploy/package/windows/']
+            installerOptions += ['--win-per-user-install',
+                                 '--win-dir-chooser',
+                                 '--win-menu',
+                                 '--win-menu-group', 'Ashigaru-terminal',
+                                 '--win-shortcut',
+                                 '--resource-dir', 'src/main/deploy/package/windows/']
             imageOptions += ['--icon', 'src/main/deploy/package/windows/ashigaru.ico']
             installerType = "exe"
         }
+
         if(os.linux) {
             if(headless) {
                 installerOptions = ['--license-file', 'LICENSE']
             } else {
-                installerOptions += ['--resource-dir', 'src/main/deploy/package/linux/', '--linux-shortcut', '--linux-menu-group', 'Ashigaru-terminal']
+                installerOptions += ['--resource-dir', 'src/main/deploy/package/linux/',
+                                     '--linux-shortcut',
+                                     '--linux-menu-group', 'Ashigaru-terminal']
             }
-            installerOptions += ['--linux-app-category', 'utils', '--linux-app-release', '1', '--linux-rpm-license-type', 'ASL 2.0', '--linux-deb-maintainer', 'Ashigaru Open Source Project']
-            imageOptions += ['--icon', 'src/main/deploy/package/linux/Ashigaru.png', '--resource-dir', 'src/main/deploy/package/linux/']
+            installerOptions += ['--linux-app-category', 'utils',
+                                 '--linux-app-release', '1',
+                                 '--linux-deb-maintainer', 'Ashigaru Open Source Project']
+            imageOptions += ['--icon', 'src/main/deploy/package/linux/Ashigaru.png',
+                             '--resource-dir', 'src/main/deploy/package/linux/']
+            installerType = "deb"
         }
+
         if(os.macOsX) {
-            installerOptions += ['--mac-sign', '--mac-signing-key-user-name', 'Ashigaru']
-            imageOptions += ['--icon', 'src/main/deploy/package/osx/ashigaru.icns', '--resource-dir', 'src/main/deploy/package/osx/']
+            installerOptions += ['--mac-sign',
+                                 '--mac-signing-key-user-name', 'Ashigaru']
+            imageOptions += ['--icon', 'src/main/deploy/package/osx/ashigaru.icns',
+                             '--resource-dir', 'src/main/deploy/package/osx/']
             installerType = "dmg"
         }
     }
