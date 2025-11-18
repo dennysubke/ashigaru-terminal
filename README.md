@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="https://github.com/dennysubke/ashigaru-terminal/blob/main/public/icon.png" alt="Ashigaru Logo" width="96" />
+</p>
+
+
 # 🥷 Ashigaru Terminal (Docker Version)
 A Docker-based, browser-accessible Bitcoin wallet terminal application for use in conjunction with **Ashigaru Whirlpool**.
 
