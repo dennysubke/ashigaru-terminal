@@ -1,6 +1,7 @@
 <p align="center">
-  <img src="https://github.com/dennysubke/ashigaru-terminal/blob/main/public/icon.png" alt="Ashigaru Logo" width="96" />
+  <img src="https://raw.githubusercontent.com/dennysubke/ashigaru-terminal/main/public/icon.png" alt="Ashigaru Logo" width="96" />
 </p>
+
 
 
 # 🥷 Ashigaru Terminal (Docker Version)
