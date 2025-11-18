@@ -1,0 +1,22 @@
+services:
+  ashigaru-terminal:
+    image: dennysubke/ashigaru-terminal:1.0.0-gotty
+    container_name: ashigaru-terminal
+    restart: unless-stopped
+    environment:
+      PORT: 7682
+      TMUX_SESSION: ashigaru
+      TOR_SOCKS_LISTEN: 127.0.0.1
+      TOR_SOCKS_PORT: 9050
+      TOR_CONTROL_ENABLE: "0"
+      TOR_CONTROL_LISTEN: 127.0.0.1
+      TOR_CONTROL_PORT: 9051
+      TOR_DATADIR: /home/ashigaru/.tor
+      ASHIGARU_CMD: /opt/ashigaru-terminal/bin/Ashigaru-terminal
+    volumes:
+      - ashigaru-tor-data:/home/ashigaru/.tor
+    ports:
+      - "7682:7682"
+
+volumes:
+  ashigaru-tor-data:
