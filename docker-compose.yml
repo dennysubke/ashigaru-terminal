@@ -1,6 +1,6 @@
 services:
   ashigaru-terminal:
-    image: dennysubke/ashigaru-terminal:1.0.0-gotty
+    image: dennysubke/ashigaru-terminal:1.0.0 #https://hub.docker.com/r/dennysubke/ashigaru-terminal
     container_name: ashigaru-terminal
     restart: unless-stopped
     environment:
