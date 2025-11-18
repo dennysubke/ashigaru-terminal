@@ -4,7 +4,7 @@
 
 
 
-# 🥷 Ashigaru Terminal (Docker Version)
+# Ashigaru Terminal (Docker Version)
 A Docker-based, browser-accessible Bitcoin wallet terminal application for use in conjunction with **Ashigaru Whirlpool**.
 
 This repository provides a ready‑to‑use `docker-compose.yml` that allows you to run the Ashigaru Terminal locally using Docker.
