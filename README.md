@@ -118,4 +118,4 @@ To connect to an Electrum server through Tor:
 - Whirlpool Guide  
   https://k3tan.com/ashigaru-whirlpool
 
-  ___
+
