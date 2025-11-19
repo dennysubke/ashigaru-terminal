@@ -9,6 +9,26 @@ A Docker-based, browser-accessible Bitcoin wallet terminal application for use i
 
 This repository provides a ready‑to‑use `docker-compose.yml` that allows you to run the Ashigaru Terminal locally using Docker.
 
+## 🎴 Overview
+
+Ashigaru Terminal is a **self-custodial Bitcoin wallet** that operates entirely through a **Terminal User Interface (TUI)**. It can be used on desktop systems or deployed on a **headless server**. The application is intentionally minimalistic, offering a simple and accessible way to interact with your Bitcoin funds.
+
+Ashigaru Terminal serves as a **companion application for Ashigaru Whirlpool**, enabling you to perform and manage CoinJoin transactions within your existing wallet setup.
+
+With Ashigaru Terminal, you can:
+
+- **Initiate a Transaction Zero (Tx0)** to create UTXOs for a specific Whirlpool pool in the *Premix* account  
+- **Mix coins** from the *Deposit*, *Postmix*, and *Badbank* accounts  
+- **Continuously remix** funds from the *Postmix* account  
+
+In short, Ashigaru Terminal provides a lightweight, terminal-based interface that enhances your Bitcoin privacy workflow through Whirlpool.
+
+---
+
+## 🎴 Screenshots
+
+
+
 ---
 
 ## 🚀 Features
