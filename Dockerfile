@@ -34,7 +34,7 @@ RUN set -eux; \
     test "$exp" = "$act" || exit 1; \
     dpkg -i /tmp/ashigaru_amd64.deb || (apt-get update && apt-get -f install -y && rm -rf /var/lib/apt/lists/*); \
   elif [ "${TARGETARCH:-}" = "arm64" ]; then \
-    dpkg -i /tmp/ashigaru_arm64.deb || (apt-get update && apt-get -f install -y && rm -rf /var/lib/apt/lists/*); \
+    dpkg-deb -x /tmp/ashigaru_arm64.deb /; \
   else \
     exit 1; \
   fi; \
