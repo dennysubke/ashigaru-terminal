@@ -29,31 +29,22 @@ RUN set -eux; \
     sed -i 's/\r$//' /tmp/signed_hashes.txt; \
     NAME="ashigaru_terminal_v${ASHI_VERSION}_amd64.deb"; \
     exp="$(awk -v n="$NAME" '$0 ~ "File name: " n {getline; print $NF; exit}' /tmp/signed_hashes.txt)"; \
-    echo "Expected SHA256 for $NAME: ${exp:-<empty>}"; \
-    if [ -z "${exp:-}" ] || [ "${#exp}" -ne 64 ]; then \
-      echo "Failed to parse a 64-char SHA256 for $NAME from /tmp/signed_hashes.txt" >&2; \
-      echo "Signed file content follows for debugging:" >&2; \
-      cat /tmp/signed_hashes.txt >&2; \
-      exit 1; \
-    fi; \
+    if [ -z "${exp:-}" ] || [ "${#exp}" -ne 64 ]; then exit 1; fi; \
     act="$(sha256sum /tmp/ashigaru_amd64.deb | awk '{print $1}')"; \
-    echo "Actual SHA256: ${act}"; \
-    test "$exp" = "$act" || { echo "SHA256 mismatch"; exit 1; }; \
-    dpkg -i /tmp/ashigaru_amd64.deb || \
-      (apt-get update && apt-get -f install -y && rm -rf /var/lib/apt/lists/*); \
+    test "$exp" = "$act" || exit 1; \
+    dpkg -i /tmp/ashigaru_amd64.deb || (apt-get update && apt-get -f install -y && rm -rf /var/lib/apt/lists/*); \
   elif [ "${TARGETARCH:-}" = "arm64" ]; then \
-    dpkg -i /tmp/ashigaru_arm64.deb || \
-      (apt-get update && apt-get -f install -y && rm -rf /var/lib/apt/lists/*); \
+    dpkg -i /tmp/ashigaru_arm64.deb || (apt-get update && apt-get -f install -y && rm -rf /var/lib/apt/lists/*); \
   else \
-    echo "Unsupported TARGETARCH: ${TARGETARCH:-<empty>}" >&2; \
     exit 1; \
   fi; \
-  rm -f /tmp/ashigaru_amd64.deb /tmp/ashigaru_arm64.deb /tmp/signed_hashes.txt
+  rm -f /tmp/ashigaru_amd64.deb /tmp/ashigaru_arm64.deb /tmp/signed_hashes.txt; \
+  if [ -d /opt/ashigaru-terminal ] && [ ! -d /opt/Ashigaru-terminal ]; then ln -s /opt/ashigaru-terminal /opt/Ashigaru-terminal; fi
 
 ENV TERM=xterm-256color \
     TMUX_SESSION=ashigaru \
     PORT=7682 \
-    ASHIGARU_CMD=/opt/ashigaru-terminal/bin/Ashigaru-terminal \
+    ASHIGARU_CMD=/opt/Ashigaru-terminal/bin/Ashigaru-terminal \
     TOR_SOCKS_LISTEN=127.0.0.1 \
     TOR_SOCKS_PORT=9050 \
     TOR_CONTROL_ENABLE=0 \
