@@ -12,7 +12,7 @@ services:
       TOR_CONTROL_LISTEN: 127.0.0.1
       TOR_CONTROL_PORT: 9051
       TOR_DATADIR: /home/ashigaru/.tor
-      ASHIGARU_CMD: /opt/ashigaru-terminal/bin/Ashigaru-terminal
+      #ASHIGARU_CMD: /opt/ashigaru-terminal/bin/Ashigaru-terminal
     volumes:
       - ashigaru-tor-data:/home/ashigaru/.tor
     ports:
