@@ -2,13 +2,13 @@
 FROM ubuntu:22.04
 
 ARG ASHI_VERSION=1.0.0
-ARG ICON_URL="https://raw.githubusercontent.com/TheNymMan/Ashi-T/main/assets/icon.png"
+ARG ICON_URL="https://raw.githubusercontent.com/dennysubke/ashigaru-terminal/refs/heads/main/public/icon.png"
 ARG TARGETARCH
 
-LABEL org.opencontainers.image.title="Ashigaru Terminal (ttyd + Tor)" \
-      org.opencontainers.image.description="Ashigaru Terminal in a tmux session, served via ttyd, with a built-in Tor SOCKS proxy." \
+LABEL org.opencontainers.image.title="Ashigaru Terminal (Docker Version)" \
+      org.opencontainers.image.description="A Docker-based, browser-accessible Bitcoin wallet terminal application for use in conjunction with Ashigaru Whirlpool." \
       org.opencontainers.image.url="https://ashigaru.rs" \
-      org.opencontainers.image.source="https://github.com/TheNymMan/Ashi-T" \
+      org.opencontainers.image.source="https://github.com/dennysubke/ashigaru-terminal" \
       org.opencontainers.image.version="${ASHI_VERSION}" \
       org.opencontainers.image.licenses="MIT" \
       io.portainer.icon="${ICON_URL}"
