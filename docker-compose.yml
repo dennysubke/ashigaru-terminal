@@ -2,6 +2,7 @@ services:
   ashigaru-terminal:
     image: dennysubke/ashigaru-terminal:1.0.0 #https://hub.docker.com/r/dennysubke/ashigaru-terminal
     container_name: ashigaru-terminal
+    user: 0:0
     restart: unless-stopped
     environment:
       PORT: 7682
@@ -12,7 +13,6 @@ services:
       TOR_CONTROL_LISTEN: 127.0.0.1
       TOR_CONTROL_PORT: 9051
       TOR_DATADIR: /home/ashigaru/.tor
-      ASHIGARU_CMD: /opt/ashigaru-terminal/bin/Ashigaru-terminal
     volumes:
       - ashigaru-tor-data:/home/ashigaru/.tor
     ports:
