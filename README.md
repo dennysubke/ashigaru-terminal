@@ -25,8 +25,13 @@ In short, Ashigaru Terminal provides a lightweight, terminal-based interface tha
 
 ---
 
-## 🎴 Screenshots
+## 📸 Screenshots
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/dennysubke/ashigaru-terminal/refs/heads/main/public/screen1.jpg" width="32%" /> &nbsp;&nbsp;
+  <img src="https://raw.githubusercontent.com/dennysubke/ashigaru-terminal/refs/heads/main/public/screen2.jpg" width="32%" /> &nbsp;&nbsp;
+  <img src="https://raw.githubusercontent.com/dennysubke/ashigaru-terminal/refs/heads/main/public/screen3.jpg" width="32%" />
+</p>
 
 
 ---
@@ -138,4 +143,4 @@ To connect to an Electrum server through Tor:
 - Whirlpool Guide  
   https://k3tan.com/ashigaru-whirlpool
 
-
+  ##
