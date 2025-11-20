@@ -36,7 +36,7 @@ In short, Ashigaru Terminal provides a lightweight, terminal-based interface tha
 ---
 
 ## 🚀 Features
-- Browser-accessible terminal UI (via **gotty**)
+- Browser-accessible terminal UI
 - Built‑in **Tor SOCKS proxy**
 - Persistent Tor datadir
 - Auto-starting tmux session running Ashigaru Terminal
