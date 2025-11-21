@@ -15,7 +15,7 @@ LABEL org.opencontainers.image.title="Ashigaru Terminal (Docker Version)" \
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
-      ca-certificates tmux ttyd tini gosu procps tor torsocks \
+      ca-certificates tmux ttyd tini gosu procps tor torsocks libx11-6 \
     && rm -rf /var/lib/apt/lists/*
 
 RUN useradd -m -u 1000 -s /bin/bash ashigaru
