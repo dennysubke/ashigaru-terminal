@@ -1,10 +1,16 @@
-name: Build & Push Multiarch Docker Images
+name: Docker Multiarch
 
 on:
   workflow_dispatch:
   push:
     branches:
       - main
+    paths:
+      - 'Dockerfile.amd64'
+      - 'Dockerfile.arm64'
+      - 'docker-entrypoint.sh'
+      - 'docker-entrypoint-arm64.sh'
+      - '.github/workflows/docker-multiarch.yml'
 
 env:
   IMAGE_NAME: dennysubke/ashigaru-terminal
@@ -12,10 +18,12 @@ env:
 
 jobs:
   build-amd64:
+    name: Build & Push amd64 Image (TTYD)
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -30,6 +38,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
+          file: ./Dockerfile.amd64
           platforms: linux/amd64
           push: true
           tags: |
@@ -37,10 +46,12 @@ jobs:
             ${{ env.IMAGE_NAME }}:latest-amd64
 
   build-arm64:
+    name: Build & Push arm64 Image (Remote GUI)
     runs-on: ubuntu-24.04-arm
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -55,6 +66,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
+          file: ./Dockerfile.arm64
           platforms: linux/arm64
           push: true
           tags: |
@@ -62,6 +74,7 @@ jobs:
             ${{ env.IMAGE_NAME }}:latest-arm64
 
   create-manifest:
+    name: Create Multiarch Manifest
     runs-on: ubuntu-latest
     needs:
       - build-amd64
@@ -77,14 +90,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Create and push multiarch manifest (VERSION)
+      - name: Create and push multiarch manifest (version tag)
         run: |
           docker buildx imagetools create \
             -t $IMAGE_NAME:$VERSION \
             $IMAGE_NAME:${VERSION}-amd64 \
             $IMAGE_NAME:${VERSION}-arm64
 
-      - name: Create and push multiarch manifest (latest)
+      - name: Create and push multiarch manifest (latest tag)
         run: |
           docker buildx imagetools create \
             -t $IMAGE_NAME:latest \
