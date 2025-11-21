@@ -9,6 +9,21 @@ A Docker-based, browser-accessible Bitcoin wallet terminal application for use i
 
 This repository provides a ready‑to‑use `docker-compose.yml` that allows you to run the Ashigaru Terminal locally using Docker.
 
+___
+
+> ⚠️ **ARM64 support in progress**
+>
+> Ashigaru Terminal runs reliably on amd64, but the ARM64 version for devices like the Raspberry Pi is still experimental.  
+> The application uses JavaFX, which requires a full graphical environment. On ARM systems the native JavaFX graphics and GTK libraries are not available, so the application cannot start in a headless environment.
+>
+> I am currently working on a solution that runs the ARM build inside a virtual display using Xvfb and exposes it through a noVNC session in the browser.
+> 
+> This approach should make the application usable on ARM even without native JavaFX support.
+>
+> Once the ARM64 version is stable this repository will be updated accordingly.
+
+___
+
 ## 🎴 Overview
 
 Ashigaru Terminal is a **self-custodial Bitcoin wallet** that operates entirely through a **Terminal User Interface (TUI)**. It can be used on desktop systems or deployed on a **headless server**. The application is intentionally minimalistic, offering a simple and accessible way to interact with your Bitcoin funds.
