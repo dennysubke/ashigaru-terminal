@@ -17,4 +17,9 @@ if ! tmux has-session -t "${TMUX_SESSION}" 2>/dev/null; then
   tmux new-session -d -s "${TMUX_SESSION}" "${ASHIGARU_CMD}"
 fi
 
-exec ttyd -p "${PORT}" -t title="Ashigaru Terminal" tmux attach-session -t "${TMUX_SESSION}"
+TTYD_TITLE="${TTYD_TITLE:-Ashigaru Terminal}"
+
+exec ttyd \
+  -p "${PORT}" \
+  -t titleFixed="${TTYD_TITLE}" \
+  tmux attach-session -t "${TMUX_SESSION}"
