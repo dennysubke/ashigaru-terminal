@@ -1,36 +1,26 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -e
 
+# Sinnvolles Limit für File Descriptors setzen (verhindert OOM allocating ... fds)
+ulimit -n 65536 || true
+
+# Defaults
+PORT="${PORT:-7682}"
+TMUX_SESSION="${TMUX_SESSION:-ashigaru}"
+ASHIGARU_CMD="${ASHIGARU_CMD:-/opt/ashigaru-terminal/bin/Ashigaru-terminal}"
+TOR_DATADIR="${TOR_DATADIR:-/home/ashigaru/.tor}"
+
+# Tor-Verzeichnisse vorbereiten
 mkdir -p "${TOR_DATADIR}"
-chown -R ashigaru:ashigaru "${TOR_DATADIR}"
-chmod 700 "${TOR_DATADIR}"
+chown -R ashigaru:ashigaru "${TOR_DATADIR}" || true
 
-if [[ ! -x "${ASHIGARU_CMD}" ]]; then
-  if [[ -x "/opt/Ashigaru-terminal/bin/Ashigaru-terminal" ]]; then
-    ASHIGARU_CMD="/opt/Ashigaru-terminal/bin/Ashigaru-terminal"
-  elif [[ -x "/opt/ashigaru-terminal/bin/Ashigaru-terminal" ]]; then
-    ASHIGARU_CMD="/opt/ashigaru-terminal/bin/Ashigaru-terminal"
-  else
-    ls -R /opt || true
-    exit 1
-  fi
+# Tor im Hintergrund starten
+tor -f /etc/tor/torrc &
+
+# tmux-Session anlegen, falls noch nicht vorhanden
+if ! tmux has-session -t "${TMUX_SESSION}" 2>/dev/null; then
+  tmux new-session -d -s "${TMUX_SESSION}" "${ASHIGARU_CMD}"
 fi
 
-if [[ "${TOR_CONTROL_ENABLE}" == "1" ]]; then
-  gosu ashigaru tor --SocksPort "${TOR_SOCKS_LISTEN}:${TOR_SOCKS_PORT}" \
-     --ControlPort "${TOR_CONTROL_LISTEN}:${TOR_CONTROL_PORT}" \
-     --DataDirectory "${TOR_DATADIR}" \
-     --RunAsDaemon 1
-else
-  gosu ashigaru tor --SocksPort "${TOR_SOCKS_LISTEN}:${TOR_SOCKS_PORT}" \
-     --DataDirectory "${TOR_DATADIR}" \
-     --RunAsDaemon 1
-fi
-
-sleep 2
-
-if ! gosu ashigaru tmux has-session -t "${TMUX_SESSION}" 2>/dev/null; then
-  gosu ashigaru tmux new-session -d -s "${TMUX_SESSION}" "${ASHIGARU_CMD}"
-fi
-
-exec gosu ashigaru ttyd -p "${PORT}" tmux attach-session -t "${TMUX_SESSION}"
+# Terminal-Server starten: ttyd + tmux
+exec ttyd -p "${PORT}" tmux attach-session -t "${TMUX_SESSION}"
