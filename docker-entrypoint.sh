@@ -3,8 +3,9 @@ set -e
 
 ulimit -n 65536 || true
 
-PORT="${PORT:-7682}"
+TERM="${TERM:-xterm-256color}"
 TMUX_SESSION="${TMUX_SESSION:-ashigaru}"
+PORT="${PORT:-7682}"
 ASHIGARU_CMD="${ASHIGARU_CMD:-/opt/Ashigaru-terminal/bin/Ashigaru-terminal}"
 TOR_DATADIR="${TOR_DATADIR:-/home/ashigaru/.tor}"
 TTYD_TITLE="${TTYD_TITLE:-Ashigaru Terminal}"
@@ -14,17 +15,14 @@ chown -R ashigaru:ashigaru "${TOR_DATADIR}" || true
 
 tor -f /etc/tor/torrc &
 
-ARCH="$(uname -m)"
-
-if ! tmux has-session -t "${TMUX_SESSION}" 2>/dev/null; then
-  if [ "$ARCH" = "aarch64" ]; then
-    tmux new-session -d -s "${TMUX_SESSION}" "/bin/bash"
-  else
-    tmux new-session -d -s "${TMUX_SESSION}" "${ASHIGARU_CMD}"
-  fi
+if tmux has-session -t "$TMUX_SESSION" 2>/dev/null; then
+  :
+else
+  tmux new-session -d -s "$TMUX_SESSION" "$ASHIGARU_CMD"
 fi
 
 exec ttyd \
-  -p "${PORT}" \
-  -t titleFixed="${TTYD_TITLE}" \
+  --port "${PORT}" \
+  --base-path / \
+  --client-option titleFixed="${TTYD_TITLE}" \
   tmux attach-session -t "${TMUX_SESSION}"
