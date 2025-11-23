@@ -13,14 +13,15 @@ ___
 
 > ⚠️ **ARM64 support in progress**
 >
-> Ashigaru Terminal runs reliably on amd64, but the ARM64 version for devices like the Raspberry Pi is still experimental.  
-> The application uses JavaFX, which requires a full graphical environment. On ARM systems the native JavaFX graphics and GTK libraries are not available, so the application cannot start in a headless environment.
+> A native ARM64 build of Ashigaru Terminal is available and installs correctly, but the application currently refuses to start in headless environments. Even with a fully emulated display stack (Xvfb + x11vnc + noVNC), the ARM64 binary exits immediately with:
 >
-> I am currently working on a solution that runs the ARM build inside a virtual display using Xvfb and exposes it through a noVNC session in the browser.
-> 
-> This approach should make the application usable on ARM even without native JavaFX support.
+> `No display detected. This application has not been built to run on a headless (no display) system.`
 >
-> Once the ARM64 version is stable this repository will be updated accordingly.
+> All required native libraries (`libX11`, `libGL`, JavaFX ARM binaries, etc.) are present and loaded, but the internal headless check inside the JavaFX application prevents execution.
+>
+> Because of this, ARM64 support cannot be completed without upstream changes.
+>
+> Work continues, and updates will follow as soon as a viable solution exists.
 
 ___
 
